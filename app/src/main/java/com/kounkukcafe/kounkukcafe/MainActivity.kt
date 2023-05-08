@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
             val nextIntent = Intent(this, CafeListActivity::class.java)
             startActivity(nextIntent)
         }
+        binding.btnExample.setOnClickListener {
+            val nextIntent = Intent(this, ExampleActivity::class.java)
+            startActivity(nextIntent)
+        }
 
 
 
