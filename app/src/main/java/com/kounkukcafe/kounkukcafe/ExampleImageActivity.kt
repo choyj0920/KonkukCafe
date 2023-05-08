@@ -45,9 +45,19 @@ class ExampleImageActivity : AppCompatActivity() {
     }
 
     private fun ivToFile(image: ImageView): File {
-        val bitmap = (image.drawable as BitmapDrawable).bitmap
+        var bitmap = (image.drawable as BitmapDrawable).bitmap
         val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 40, stream)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+
+
+        // 크기 너무 크게하면 api에서 안받아줌  크기 줄이기 최대 400으로
+        val width = bitmap.width
+        val height = bitmap.height
+        val maxSide = if (width > height) width else height // 가로, 세로 중 큰 쪽 찾기
+        val scale = 400f / maxSide // 큰 쪽이 400이 되도록 비율 계산
+        val newWidth = (width * scale).toInt()
+        val newHeight = (height * scale).toInt()
+        val newbitmap =Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
 
         var filepath= getExternalFilesDir(null).toString() +"/imageRecognition"
         val dir=File(filepath)
@@ -58,7 +68,7 @@ class ExampleImageActivity : AppCompatActivity() {
         var file =File(dir,fileName)
         filepath=file.absolutePath
 
-        file.writeBitmap(bitmap,Bitmap.CompressFormat.PNG,50)
+        file.writeBitmap(newbitmap,Bitmap.CompressFormat.PNG,50)
         //var file = File(filepath+"/"+fileName)
         file=File(filepath)
         return file

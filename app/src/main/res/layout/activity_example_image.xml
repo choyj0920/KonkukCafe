@@ -7,19 +7,20 @@
     tools:context=".ExampleActivity">
 
     <ImageView
+
         android:id="@+id/iv_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
+        android:maxHeight="300dp"
         android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:hint="지금 감정을 글자로 표현해줘"
         android:minHeight="100dp"
         android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         app:srcCompat="@android:drawable/ic_menu_report_image"
-        tools:srcCompat="@tools:sample/avatars" />
+        />
 
 
 

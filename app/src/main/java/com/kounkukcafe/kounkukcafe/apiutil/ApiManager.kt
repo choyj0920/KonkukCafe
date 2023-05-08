@@ -303,10 +303,8 @@ object ApiManager {
 
                                 }else{
                                     Log.d("TAG","감정인식 api fail!")
-                                    val json = JSONObject(response.body().toString()) // toString() is not the response body, it is a debug representation of the response body
-                                    val resultCode = json.getString("17003")
-                                    val message=json.getString("message")
-                                    tv.setText("$resultCode  : $message")
+                                    tv.setText("error : ${response}")
+
                                 }
 
                             } else {
@@ -360,10 +358,8 @@ object ApiManager {
 
                         }else{
                             Log.d("TAG","감정인식 api fail!")
-                            val json = JSONObject(response.body().toString()) // toString() is not the response body, it is a debug representation of the response body
-                            val resultCode = json.getString("17003")
-                            val message=json.getString("message")
-                            tv.setText("$resultCode  : $message")
+                            tv.setText("error : ${response}")
+
                         }
 
                     } else {
