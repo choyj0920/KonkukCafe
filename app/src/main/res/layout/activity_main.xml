@@ -36,10 +36,19 @@
     <Button
         android:id="@+id/btn_example"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="example"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
+    <Button
+        android:id="@+id/btn_example_image"
+        android:layout_marginLeft="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="example-image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_example" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

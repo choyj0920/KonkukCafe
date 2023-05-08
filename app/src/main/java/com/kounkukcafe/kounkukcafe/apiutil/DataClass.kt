@@ -1,10 +1,9 @@
 package com.kounkukcafe.kounkukcafe.apiutil
 
 import com.google.gson.annotations.SerializedName
-import retrofit2.Call
 import kotlin.math.round
 
-data class EmotionRecognitionResponse(
+data class ERResponse(
     @SerializedName("type")
     val type: String,
     @SerializedName("results")
@@ -23,9 +22,9 @@ data class EmotionResults(
 
 data class UniModal(
     @SerializedName("image")
-    val image: Any?,
+    val image: EmotionText?,
     @SerializedName("audio")
-    val audio: Any?,
+    val audio: EmotionText?,
     @SerializedName("text")
     val text: EmotionText
 )

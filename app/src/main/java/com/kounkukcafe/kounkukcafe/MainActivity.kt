@@ -1,14 +1,9 @@
 package com.kounkukcafe.kounkukcafe
 
 import android.content.Intent
-import android.media.FaceDetector.Face
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.kounkukcafe.kounkukcafe.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnExample.setOnClickListener {
             val nextIntent = Intent(this, ExampleActivity::class.java)
+            startActivity(nextIntent)
+        }
+        binding.btnExampleImage.setOnClickListener {
+            val nextIntent = Intent(this, ExampleImageActivity::class.java)
             startActivity(nextIntent)
         }
 
