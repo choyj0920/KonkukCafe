@@ -2,11 +2,9 @@ import threading
 import time
 import requests
 import http.client
-import mimetypes
 from codecs import encode
 import json
 
-from requests_toolbelt import MultipartEncoder
 
 # 첫 번째 API: 토큰 요청 API
 token_url = 'https://oauth.api.lgthinqai.net:443/v1/cognito'  # 토큰 요청 API의 URL
@@ -39,7 +37,7 @@ def renew_token():
 
 
 # 감정 분석 API를 호출하는 함수
-def call_api(token,inputText):
+def call_api(inputText):
     # API 호출 코드
     
     conn = http.client.HTTPSConnection("korea.api.lgthinqai.net", 443)
@@ -62,14 +60,17 @@ def call_api(token,inputText):
     'Cookie': 'AWSALB=V5f5E/YK2RYxefslFcBChE3tqNGX1oM/PR0HHGQfaxGin+YqmF5pGw9uYCIUD2PXQX7VHEj7JxkZyF5Jl3beDiEkD9STnNzWukJvfqz0y/NIYcrvKmhigVSxOe2m; AWSALBCORS=V5f5E/YK2RYxefslFcBChE3tqNGX1oM/PR0HHGQfaxGin+YqmF5pGw9uYCIUD2PXQX7VHEj7JxkZyF5Jl3beDiEkD9STnNzWukJvfqz0y/NIYcrvKmhigVSxOe2m',
     'Content-type': 'multipart/form-data; boundary={}'.format(boundary)
     }
-    conn.request("POST", "/emotion/er/v1/recognition", payload, headers)
-    res = conn.getresponse()
-    # 응답 처리 코드
     
-    jsondata = res.read().decode("utf-8")
-    data= json.loads(jsondata)
+    # 응답 처리 코드
+    try:
+        conn.request("POST", "/emotion/er/v1/recognition", payload, headers)
+        res = conn.getresponse()
+        jsondata = res.read().decode("utf-8")
+        data= json.loads(jsondata)
 
-    print(data["results"]["uni_modal"]['text'])
+        print(data["results"]["uni_modal"]['text'])
+    except:
+        print("error")
 
 
 # 메인 함수
@@ -89,9 +90,6 @@ if __name__ == '__main__':
 
         # API 호출
         try:
-            call_api(token,"화가난다")
+            call_api(input("텍스트 입력 : "))
         except:
-            False
-
-        # 1분 후에 다시 실행
-        time.sleep(60)
+            exit(1)
