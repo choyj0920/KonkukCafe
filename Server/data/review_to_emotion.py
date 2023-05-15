@@ -90,6 +90,10 @@ if __name__ == '__main__':
 
         # API 호출
         try:
-            call_api(input("텍스트 입력 : "))
+            input_string = input("텍스트 입력: ")
+            split_strings = input_string.split('[>*}')
+            for string in split_strings:
+                if string.strip():
+                    call_api(string.strip())
         except:
             exit(1)
