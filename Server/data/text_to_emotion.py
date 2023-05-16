@@ -17,8 +17,8 @@ token_data = {
 
 # 30분마다 토큰을 갱신하는 스레드 함수
 def update_token():
-    global token # 전역변수 처리
-    while True:
+    global token,stopFlag # 전역변수 처리
+    while not stopFlag:
         # 토큰 갱신 코드
         time.sleep(1800)
 
@@ -68,14 +68,15 @@ def call_api(inputText):
         jsondata = res.read().decode("utf-8")
         data= json.loads(jsondata)
 
-        print(data["results"]["uni_modal"]['text'])
+        return data["results"]["uni_modal"]['text']
     except:
-        print("error")
+        return False
+    
 
-
-# 메인 함수
-if __name__ == '__main__':
-    # 스레드 생성 및 실행
+token=""
+def start_tokenThread():
+    global token,stopFlag
+    stopFlag=False
     try:
         token = renew_token()
     except:
@@ -84,12 +85,23 @@ if __name__ == '__main__':
     t = threading.Thread(target=update_token)
     t.start()
 
+def finish_tokenThread():
+    global stopFlag
+    stopFlag=True
+    
+    
+
+# 메인 함수
+if __name__ == '__main__':
+    # 스레드 생성 및 실행
+    start_tokenThread()
+
     # API 호출
     while True:
         # 현재 토큰 가져오기
 
         # API 호출
         try:
-            call_api(input("텍스트 입력 : "))
+            print(call_api(input("텍스트 입력 : ")))
         except:
             exit(1)
