@@ -91,8 +91,8 @@ app.post("/getCafe", async function (req, res) {
     console.log(error);
     res.json({
       code: 500,
-      message: "정상작동",
-      cafelist: cafesortedlist[emotion].slice(0, 10),
+      message: "작동오류",
+      cafelist: cafesortedlist[0].slice(0, 10),
     });
   }
 

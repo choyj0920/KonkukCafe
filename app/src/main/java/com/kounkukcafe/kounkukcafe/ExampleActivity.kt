@@ -1,5 +1,6 @@
 package com.kounkukcafe.kounkukcafe
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.kounkukcafe.kounkukcafe.apiutil.ApiManager
@@ -21,6 +22,12 @@ class ExampleActivity : AppCompatActivity() {
                 ApiManager.callEmotionrecognitionText(inputtext,binding.resultText)
             }
         }
+        binding.buttontolist.setOnClickListener {
+            val nextIntent = Intent(this, CafeListActivity::class.java)
+            nextIntent.putExtra("emotion",binding.resultText.toString().trim())
+            startActivity(nextIntent)
+        }
+
 
     }
 }

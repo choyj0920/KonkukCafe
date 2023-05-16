@@ -45,4 +45,15 @@
         android:textAlignment="center"
         android:textSize="18sp" />
 
+    <Button
+        android:gravity="center"
+
+        android:id="@+id/buttontolist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/result_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="카페찾아보기" />
+
 </RelativeLayout>

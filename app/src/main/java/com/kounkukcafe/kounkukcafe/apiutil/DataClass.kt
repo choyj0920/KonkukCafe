@@ -51,3 +51,46 @@ data class TokenResponse(
     @SerializedName("token_type")
     val token_type: String
 )
+
+
+data class Cafe(
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("adr")
+    val adr: String,
+    @SerializedName("phone")
+    val phone: String,
+    @SerializedName("desc")
+    val desc: String,
+    @SerializedName("rating")
+    val rating: String,
+    @SerializedName("리뷰감정")
+    val 리뷰감정: String,
+    @SerializedName("분노")
+    val 분노: Double,
+    @SerializedName("싫음")
+    val 싫음: Double,
+    @SerializedName("두려움")
+    val 두려움: Double,
+    @SerializedName("행복")
+    val 행복: Double,
+    @SerializedName("슬픔")
+    val 슬픔: Double,
+    @SerializedName("놀람")
+    val 놀람: Double,
+    @SerializedName("중립")
+    val 중립: Double,
+    @SerializedName("lat")
+    val lat: String,
+    @SerializedName("lng")
+    val lng: String
+)
+
+data class CafeResponseData(
+    @SerializedName("code")
+    val code: Int,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("cafelist")
+    val cafelist: List<Cafe>
+)
