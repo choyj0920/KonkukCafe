@@ -24,7 +24,7 @@ class ExampleActivity : AppCompatActivity() {
         }
         binding.buttontolist.setOnClickListener {
             val nextIntent = Intent(this, CafeListActivity::class.java)
-            nextIntent.putExtra("emotion",binding.resultText.toString().trim())
+            nextIntent.putExtra("emotion",binding.resultText.text.toString().trim())
             startActivity(nextIntent)
         }
 

@@ -16,6 +16,7 @@ import com.kounkukcafe.kounkukcafe.apiutil.CafeApiManager
 import com.kounkukcafe.kounkukcafe.apiutil.CafeResponseData
 import com.kounkukcafe.kounkukcafe.apiutil.EmotionBody
 import com.kounkukcafe.kounkukcafe.databinding.ActivityCafeListBinding
+import net.daum.mf.map.api.MapLayout
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -56,17 +57,27 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
 
         binding=ActivityCafeListBinding.inflate(layoutInflater)
 
+        val mapLayout = MapLayout(this)
+        mapView = mapLayout.mapView
+
         setContentView(binding.root)
-        mapViewContainer=binding.mapView as ViewGroup
-        mapView = MapView(this)
-        mapViewContainer.addView(mapView);
+
+        mapView.setMapType(MapView.MapType.Standard)
+
+
+        mapView.setDaumMapApiKey("c52b4df6c2ee738080177828ef4c947f")
+
+        val mapViewContainer = binding.mapView as ViewGroup
+        mapViewContainer  .addView(mapLayout)
+
         val bottomSheet = binding.bottomSheet
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.peekHeight = 300  // 피크 높이를 원하는 값으로 설정합니다.
+        bottomSheetBehavior.peekHeight = 400  // 피크 높이를 원하는 값으로 설정합니다.
 
-        var emotion = intent.getIntExtra("emotion",0);
-        update(emotion)
+        var emotion = intent.getStringExtra("emotion");
+        update(emotion?:0)
 
+        setContentView(binding.root)
 
 
     }
@@ -76,7 +87,10 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
         for (cafe in cafes) {
             val marker = createMarker(cafe)
             mapView.addPOIItem(marker)
+
+            Log.d("TAG","cafeDATA ${cafe.name}")
         }
+        mapFocusCafe(cafes[9])
         mapView.setPOIItemEventListener(this)
     }
 
@@ -91,10 +105,10 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
             Log.d("E","오류발생 :카페리스트를 가져올 감정을 제대로 골라주세요")
             return
         }
+        Log.d("TAG","---------------${_emotion}------------------")
 
         val call = CafeApiManager.cafeApiService.getCafelistfromEmotion(
             EmotionBody(_emotion)
-
         )
 
         call.enqueue(object : Callback<CafeResponseData?> {
@@ -103,6 +117,7 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
                 response: Response<CafeResponseData?>
             ) {
 
+                Log.d("TAG","cafe리스트 sucess")
                 cafes= response.body()?.cafelist!!
                 initMapview()
 
@@ -111,6 +126,8 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
             }
 
             override fun onFailure(call: Call<CafeResponseData?>, t: Throwable) {
+                Log.d("TAG","cafe리스트 fail${t}")
+
 
                 // 에러 처리
             }
@@ -133,6 +150,9 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
         marker.mapPoint = MapPoint.mapPointWithGeoCoord(cafe.lat.toDouble(), cafe.lng.toDouble())
         marker.markerType = MapPOIItem.MarkerType.BluePin
         marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
+
+        Log.d("TAG","마커 생성 ${cafe.name}")
+
         return marker
     }
 

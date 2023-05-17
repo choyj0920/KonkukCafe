@@ -214,7 +214,7 @@ object ApiManager {
                 ) {
                     if (response.isSuccessful) {
                         // response 처리
-                        val emotion = response.body()?.results?.uni_modal?.text
+                        val emotion = response.body()?.results?.uni_modal?.text?.result
                         if(emotion!=null){
                             Log.d("TAG","감정인식 api Sucess!")
                             tv.setText(emotion.toString())

@@ -3,6 +3,7 @@ package com.kounkukcafe.kounkukcafe.apiutil
 import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.TextView
+import com.google.gson.annotations.SerializedName
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -16,7 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.io.File
 
-data class EmotionBody(val emotion: String)
+data class EmotionBody(
+    @SerializedName("emotion") val emotion: String)
 
 interface CafeApiService {
 
@@ -27,7 +29,6 @@ interface CafeApiService {
 
 
 }
-
 
 // 해당 클래스는 싱글톤패턴 클래스로 getinstance로 가져와야함
 object CafeApiManager {
