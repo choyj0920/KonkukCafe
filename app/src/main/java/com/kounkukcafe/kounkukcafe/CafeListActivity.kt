@@ -53,6 +53,8 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
                 .check()
         }
 
+        //이전 액티비티에서 값가져오기
+        var emotion = intent.getStringExtra("emotion");
 
 
         binding=ActivityCafeListBinding.inflate(layoutInflater)
@@ -63,37 +65,29 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
         setContentView(binding.root)
 
         mapView.setMapType(MapView.MapType.Standard)
-
-
-        mapView.setDaumMapApiKey("c52b4df6c2ee738080177828ef4c947f")
-
-        val mapViewContainer = binding.mapView as ViewGroup
-        mapViewContainer  .addView(mapLayout)
+        
+        mapViewContainer = binding.mapView as ViewGroup
+        mapViewContainer.addView(mapLayout)
 
         val bottomSheet = binding.bottomSheet
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.peekHeight = 400  // 피크 높이를 원하는 값으로 설정합니다.
 
-        var emotion = intent.getStringExtra("emotion");
         update(emotion?:0)
 
         setContentView(binding.root)
 
-
     }
-
 
     fun initMapview(){
         for (cafe in cafes) {
             val marker = createMarker(cafe)
             mapView.addPOIItem(marker)
-
             Log.d("TAG","cafeDATA ${cafe.name}")
         }
-        mapFocusCafe(cafes[9])
+        mapFocusCafe(cafes[0])
         mapView.setPOIItemEventListener(this)
     }
-
 
     fun update(emotion:Any){
         var _emotion=""
@@ -107,11 +101,9 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
         }
         Log.d("TAG","---------------${_emotion}------------------")
 
-        val call = CafeApiManager.cafeApiService.getCafelistfromEmotion(
-            EmotionBody(_emotion)
-        )
-
-        call.enqueue(object : Callback<CafeResponseData?> {
+        // 해당 감정으로 카페리스트 가져오기
+        CafeApiManager.cafeApiService.getCafelistfromEmotion(EmotionBody(_emotion))
+            .enqueue(object : Callback<CafeResponseData?> {
             override fun onResponse(
                 call: Call<CafeResponseData?>,
                 response: Response<CafeResponseData?>
@@ -134,13 +126,13 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
         })
     }
     fun update_recyclerview(){
-        val recyclerView = binding.recyclerView
+        recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = CafeAdapter(cafes)
     }
 
     fun mapFocusCafe(cafe: Cafe){
-        mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(cafe.lat.toDouble(), cafe.lat.toDouble()), 9, true);
+        mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(cafe.lat.toDouble(), cafe.lng.toDouble()), 9, true);
     }
 
     fun createMarker(cafe: Cafe): MapPOIItem {
@@ -189,5 +181,6 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
 
     override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
     }
+
 
 }
