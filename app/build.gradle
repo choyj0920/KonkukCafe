@@ -36,6 +36,15 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a', 'x86_84'
+            universalApk true
+        }
+    }
 }
 
 dependencies {

@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <meta-data android:name="com.kakao.sdk.AppKey" android:value="c52b4df6c2ee738080177828ef4c947f"/>
+
 
     <application
         android:usesCleartextTraffic="true"
@@ -48,6 +48,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="c52b4df6c2ee738080177828ef4c947f"/>
     </application>
 
 </manifest>

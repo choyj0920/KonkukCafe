@@ -4,7 +4,6 @@ import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,6 @@ import com.kounkukcafe.kounkukcafe.apiutil.CafeApiManager
 import com.kounkukcafe.kounkukcafe.apiutil.CafeResponseData
 import com.kounkukcafe.kounkukcafe.apiutil.EmotionBody
 import com.kounkukcafe.kounkukcafe.databinding.ActivityCafeListBinding
-import net.daum.mf.map.api.MapLayout
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -30,7 +28,6 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
     private lateinit var binding: ActivityCafeListBinding
     private lateinit var cafes: List<Cafe>
     private lateinit var mapView :MapView
-    private lateinit var mapViewContainer:ViewGroup
     private lateinit var recyclerView:RecyclerView
 
 
@@ -58,24 +55,20 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
 
 
         binding=ActivityCafeListBinding.inflate(layoutInflater)
-
-        val mapLayout = MapLayout(this)
-        mapView = mapLayout.mapView
-
         setContentView(binding.root)
+
+
+        mapView = binding.mapView
 
         mapView.setMapType(MapView.MapType.Standard)
         
-        mapViewContainer = binding.mapView as ViewGroup
-        mapViewContainer.addView(mapLayout)
 
         val bottomSheet = binding.bottomSheet
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.peekHeight = 400  // 피크 높이를 원하는 값으로 설정합니다.
+        bottomSheetBehavior.peekHeight = 800  // 피크 높이를 원하는 값으로 설정합니다.
 
         update(emotion?:0)
 
-        setContentView(binding.root)
 
     }
 
@@ -128,11 +121,11 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
     fun update_recyclerview(){
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = CafeAdapter(cafes)
+        recyclerView.adapter = CafeAdapter(cafes,this)
     }
 
     fun mapFocusCafe(cafe: Cafe){
-        mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(cafe.lat.toDouble(), cafe.lng.toDouble()), 9, true);
+        mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(cafe.lat.toDouble(), cafe.lng.toDouble()), 3, true);
     }
 
     fun createMarker(cafe: Cafe): MapPOIItem {
