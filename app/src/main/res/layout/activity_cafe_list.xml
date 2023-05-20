@@ -10,18 +10,25 @@
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="200dp"
          />
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        >
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </androidx.core.widget.NestedScrollView>
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            />
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

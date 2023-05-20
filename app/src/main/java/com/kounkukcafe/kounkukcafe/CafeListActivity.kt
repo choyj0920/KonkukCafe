@@ -1,9 +1,12 @@
 package com.kounkukcafe.kounkukcafe
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View.OnTouchListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -65,7 +68,10 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
 
         val bottomSheet = binding.bottomSheet
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.peekHeight = 800  // 피크 높이를 원하는 값으로 설정합니다.
+        bottomSheetBehavior.isFitToContents=false
+        bottomSheetBehavior.expandedOffset=900
+
+        bottomSheetBehavior.peekHeight = 500  // 피크 높이를 원하는 값으로 설정합니다.
 
         update(emotion?:0)
 
@@ -73,14 +79,15 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
     }
 
     fun initMapview(){
-        for (cafe in cafes) {
-            val marker = createMarker(cafe)
+        for (i in cafes.indices) {
+            val marker = createMarker(i)
             mapView.addPOIItem(marker)
-            Log.d("TAG","cafeDATA ${cafe.name}")
+            Log.d("TAG","cafeDATA ${cafes[i].name}")
         }
-        mapFocusCafe(cafes[0])
+        mapFocusCafe(0)
         mapView.setPOIItemEventListener(this)
     }
+
 
     fun update(emotion:Any){
         var _emotion=""
@@ -118,20 +125,38 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
             }
         })
     }
+    @SuppressLint("ClickableViewAccessibility")
     fun update_recyclerview(){
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = CafeAdapter(cafes,this)
+
+        recyclerView.isNestedScrollingEnabled = true;
+        recyclerView.setOnTouchListener(OnTouchListener { v, event ->
+            val action = event.action
+            when (action) {
+                MotionEvent.ACTION_DOWN ->                         // Disallow NestedScrollView to intercept touch events.
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                MotionEvent.ACTION_UP ->                         // Allow NestedScrollView to intercept touch events.
+                    v.parent.requestDisallowInterceptTouchEvent(false)
+            }
+
+            // Handle RecyclerView touch events.
+            v.onTouchEvent(event)
+            true
+        })
     }
 
-    fun mapFocusCafe(cafe: Cafe){
-        mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(cafe.lat.toDouble(), cafe.lng.toDouble()), 3, true);
+    fun mapFocusCafe(index: Int){
+        mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(cafes[index].lat.toDouble(), cafes[index].lng.toDouble()), 3, true);
+        mapView.selectPOIItem(mapView.findPOIItemByTag(index),false)
     }
 
-    fun createMarker(cafe: Cafe): MapPOIItem {
+    fun createMarker(index:Int): MapPOIItem {
+        var cafe=cafes[index]
         val marker = MapPOIItem()
         marker.itemName = cafe.name
-        marker.tag = 0
+        marker.tag = index
         marker.mapPoint = MapPoint.mapPointWithGeoCoord(cafe.lat.toDouble(), cafe.lng.toDouble())
         marker.markerType = MapPOIItem.MarkerType.BluePin
         marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin

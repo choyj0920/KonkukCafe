@@ -9,14 +9,15 @@ import com.kounkukcafe.kounkukcafe.databinding.ItemCafeBinding
 class CafeAdapter(private val cafes: List<Cafe>,val cafeListActivity: CafeListActivity) : RecyclerView.Adapter<CafeAdapter.CafeViewHolder>() {
 
     inner class CafeViewHolder(private val binding: ItemCafeBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(cafe: Cafe) {
+        fun bind(index:Int) {
+            val cafe=cafes[index]
             binding.cafeName.text = cafe.name
             binding.cafeRating.text = cafe.rating
             binding.cafePhone.text = cafe.phone
             binding.cafeAddress.text = cafe.adr
             binding.cafeText.text = cafe.desc
             binding.layout.setOnClickListener {
-                this@CafeAdapter.cafeListActivity.mapFocusCafe(cafe)
+                this@CafeAdapter.cafeListActivity.mapFocusCafe(index)
             }
 
             // Add more bindings for other views
@@ -30,7 +31,7 @@ class CafeAdapter(private val cafes: List<Cafe>,val cafeListActivity: CafeListAc
 
     override fun onBindViewHolder(holder: CafeViewHolder, position: Int) {
         val cafe = cafes[position]
-        holder.bind(cafe)
+        holder.bind(position)
 
 
     }
