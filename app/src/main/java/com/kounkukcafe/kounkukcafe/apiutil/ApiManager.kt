@@ -296,7 +296,7 @@ object ApiManager {
                             if (response.isSuccessful) {
                                 // response 처리 -- text
 
-                                val emotion = response.body()?.results?.uni_modal?.image
+                                val emotion = response.body()?.results?.uni_modal?.image?.result
                                 if(emotion!=null){
                                     Log.d("TAG","감정인식 api Sucess!")
                                     tv.setText(emotion.toString())
@@ -351,7 +351,7 @@ object ApiManager {
                 ) {
                     if (response.isSuccessful) {
                         // response 처리
-                        val emotion = response.body()?.results?.uni_modal?.image
+                        val emotion = response.body()?.results?.uni_modal?.image?.result
                         if(emotion!=null){
                             Log.d("TAG","감정인식 api Sucess!")
                             tv.setText(emotion.toString())
