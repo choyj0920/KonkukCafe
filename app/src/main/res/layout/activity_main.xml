@@ -1,54 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".MainActivity">
 
-    <Button
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="50dp"
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="음성인식"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    
+    <ImageView
+        android:layout_width="275dp"
+        android:layout_height="275dp"
+        android:src="@drawable/logo"
+        android:layout_marginTop="150dp"/>
 
     <Button
-        android:id="@+id/button2"
-        android:layout_marginLeft="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="얼굴인식"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        android:id="@+id/btn_face"
+        android:layout_width="340dp"
+        android:layout_height="52dp"
+        android:background="@drawable/buttonshape"
+        android:layout_marginTop="95dp"
+        android:fontFamily="@font/nanummyeongjobold"
+        android:text="표정으로 시작하기"
+        android:textColor="@color/white" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_marginLeft="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btn_voice"
+        android:layout_width="340dp"
+        android:layout_height="52dp"
+        android:background="@drawable/buttonshape2"
+        android:text="음성으로 시작하기"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/nanummyeongjobold"
+        android:textColor="@color/font_black"/>
+
+    <Button
+        android:id="@+id/btn_cafelist"
+        android:layout_width="340dp"
+        android:layout_height="52dp"
+        android:background="@drawable/buttonshape"
         android:text="카페리스트"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-    <Button
-        android:id="@+id/btn_example"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="example"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-    <Button
-        android:id="@+id/btn_example_image"
-        android:layout_marginLeft="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="example-image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_example" />
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/nanummyeongjobold"
+        android:textColor="@color/white"/>
+<!--    <Button-->
+<!--        android:id="@+id/btn_example"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="example"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/button3" />-->
+<!--    <Button-->
+<!--        android:id="@+id/btn_example_image"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="example-image"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btn_example" />-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
