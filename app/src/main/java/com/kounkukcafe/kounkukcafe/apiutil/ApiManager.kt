@@ -307,6 +307,7 @@ object ApiManager {
 
                                 }
 
+
                             } else {
                                 // 에러 처리
                                 tv.setText("error : ${response}")
