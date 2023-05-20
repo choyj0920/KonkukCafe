@@ -1,6 +1,6 @@
 package com.kounkukcafe.kounkukcafe
 
-import android.annotation.SuppressLint
+
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,9 +8,9 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.SpeechRecognizer
 import android.speech.RecognizerIntent
-
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.kounkukcafe.kounkukcafe.apiutil.ApiManager
 import com.kounkukcafe.kounkukcafe.databinding.ActivityVoiceBinding
 
 class VoiceActivity : AppCompatActivity() {
@@ -41,9 +41,24 @@ class VoiceActivity : AppCompatActivity() {
         }
 
         binding.button.setOnClickListener {
+
+
             mRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
             mRecognizer.setRecognitionListener(listener)
             mRecognizer.startListening(intent)
+        }
+
+
+//        binding.button.setOnClickListener {
+//            val inputtext:String=binding.textView.text.toString().trim().replace("\n","")
+//            if(inputtext.length != 0){
+//                ApiManager.callEmotionrecognitionText(inputtext,binding.resultText)
+//            }
+//        }
+        binding.buttontolist.setOnClickListener {
+            val nextIntent = Intent(this, CafeListActivity::class.java)
+            nextIntent.putExtra("emotion",binding.resultText.text.toString().trim())
+            startActivity(nextIntent)
         }
     }
 
@@ -83,10 +98,17 @@ class VoiceActivity : AppCompatActivity() {
             for (i in matches.indices) {
                 binding.textView.text = matches[i]
             }
+
+            val inputtext:String=binding.textView.text.toString().trim().replace("\n","")
+            if(inputtext.length != 0){
+                ApiManager.callEmotionrecognitionText(inputtext,binding.resultText)
+            }
         }
 
         override fun onPartialResults(partialResults: Bundle?) {}
 
         override fun onEvent(eventType: Int, params: Bundle?) {}
     }
+
+
 }
