@@ -18,6 +18,7 @@ import java.io.ByteArrayOutputStream
 class FaceActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var binding: ActivityFaceBinding
     //var selectedimagefile :File? =null
+    var selectedimagefile :File? =null
 
     companion object {
         private const val REQUEST_IMAGE_PICK = 1000
@@ -99,6 +100,16 @@ class FaceActivity : AppCompatActivity(), View.OnClickListener{
 
             // 이미지뷰에 Bitmap으로 이미지를 입력
             binding.ivInput.setImageBitmap(imageBitmap)
+        }else if(requestCode == REQUEST_IMAGE_PICK && resultCode == Activity.RESULT_OK){
+            val imageUri = data?.data
+            // uri 객체를 이용하여 파일 경로 생성
+            val filePath = getPathFromUri(imageUri)
+
+
+            // 파일 객체 생성
+            selectedimagefile = File(filePath)
+            binding.ivInput.setImageURI(imageUri)
+
         }
     }
 
