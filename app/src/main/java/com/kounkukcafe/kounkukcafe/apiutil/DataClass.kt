@@ -41,6 +41,15 @@ data class EmotionText(
         return "현재 감정 : $result \n${count}"
 
     }
+
+    companion object {
+        fun fromString(str: String): EmotionText {
+            val lines = str.split("\n")
+            val result = lines[0].substringAfter(": ").trim()
+            val probs = lines[1].split(",").map { it.substringAfter(": ").substringBefore("%").toDouble() / 100 }
+            return EmotionText(result, probs)
+        }
+    }
 }
 
 data class TokenResponse(
