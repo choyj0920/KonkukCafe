@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KounkukCafe"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="27">
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

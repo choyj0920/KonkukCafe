@@ -62,4 +62,16 @@
         android:textAlignment="center"
         android:textSize="18sp" />
 
+    <Button
+        android:gravity="center"
+        android:id="@+id/recommend"
+        android:layout_width="200dp"
+        android:layout_height="52dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/result_text"
+        android:background="@drawable/buttonshape"
+        android:text="카페리스트"
+        android:textColor="@color/white"
+        android:fontFamily="@font/nanummyeongjobold"/>
+
 </RelativeLayout>

@@ -47,6 +47,11 @@ class FaceActivity : AppCompatActivity(), View.OnClickListener{
             ApiManager.callEmotionrecognitionImage(ivToFile(binding.ivInput),binding.resultText)
 
         }
+        binding.recommend.setOnClickListener {
+            val nextIntent = Intent(this, CafeListActivity::class.java)
+            nextIntent.putExtra("emotion",binding.resultText.text.toString().trim())
+            startActivity(nextIntent)
+        }
 
     }
 
