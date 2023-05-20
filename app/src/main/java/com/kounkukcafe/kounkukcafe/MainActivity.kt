@@ -35,26 +35,26 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button.setOnClickListener {
+        binding.btnVoice.setOnClickListener {
             val nextIntent = Intent(this, VoiceActivity::class.java)
             startActivity(nextIntent)
         }
-        binding.button2.setOnClickListener {
+        binding.btnFace.setOnClickListener {
             val nextIntent = Intent(this, FaceActivity::class.java)
             startActivity(nextIntent)
         }
-        binding.button3.setOnClickListener {
+        binding.btnCafelist.setOnClickListener {
             val nextIntent = Intent(this, CafeListActivity::class.java)
             startActivity(nextIntent)
         }
-        binding.btnExample.setOnClickListener {
-            val nextIntent = Intent(this, ExampleActivity::class.java)
-            startActivity(nextIntent)
-        }
-        binding.btnExampleImage.setOnClickListener {
-            val nextIntent = Intent(this, ExampleImageActivity::class.java)
-            startActivity(nextIntent)
-        }
+//        binding.btnExample.setOnClickListener {
+//            val nextIntent = Intent(this, ExampleActivity::class.java)
+//            startActivity(nextIntent)
+//        }
+//        binding.btnExampleImage.setOnClickListener {
+//            val nextIntent = Intent(this, ExampleImageActivity::class.java)
+//            startActivity(nextIntent)
+//        }
 
 
 
