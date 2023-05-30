@@ -32,7 +32,9 @@
             android:exported="false" />
         <activity
             android:name=".VoiceRecordingActivity"
-            android:exported="false"/>
+            android:exported="false">
+
+        </activity>
 
 
         <meta-data
