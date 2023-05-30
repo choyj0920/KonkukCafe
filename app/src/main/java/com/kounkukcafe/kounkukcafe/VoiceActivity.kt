@@ -19,7 +19,6 @@ class VoiceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVoiceBinding
     private val PERMISSION = 1
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVoiceBinding.inflate(layoutInflater)
