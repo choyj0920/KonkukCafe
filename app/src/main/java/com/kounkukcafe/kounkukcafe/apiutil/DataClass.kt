@@ -101,5 +101,7 @@ data class CafeResponseData(
     @SerializedName("message")
     val message: String,
     @SerializedName("cafelist")
-    val cafelist: List<Cafe>
+    val cafelist: List<Cafe>,
+    @SerializedName("negativecafelist")
+    val negativecafelist: List<Cafe>
 )
