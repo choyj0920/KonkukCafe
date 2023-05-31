@@ -61,6 +61,8 @@ app.post("/getCafe", async function (req, res) {
   console.log(`${new Date().toLocaleString("ko-kr")} [건국카베기생]`);
   console.log(req.body);
   var emotion = req.body.emotion;
+  var ele = req.body.ele;
+
   var message = "정상작동";
   var resultCode = 404;
   try {
@@ -78,6 +80,7 @@ app.post("/getCafe", async function (req, res) {
           code: resultCode,
           message: "감정을 확인해주세요",
           cafelist: cafesortedlist[emotion].slice(0, 10),
+          negativecafelist: cafesortedlist[emotion].reverse().slice(0, 10),
         });
         return;
       }
@@ -86,6 +89,7 @@ app.post("/getCafe", async function (req, res) {
       code: resultCode,
       message: "정상작동",
       cafelist: cafesortedlist[emotion].slice(0, 10),
+      negativecafelist: cafesortedlist[emotion].reverse().slice(0, 10),
     });
   } catch (error) {
     console.log(error);
@@ -93,6 +97,7 @@ app.post("/getCafe", async function (req, res) {
       code: 500,
       message: "작동오류",
       cafelist: cafesortedlist[0].slice(0, 10),
+      negativecafelist: cafesortedlist[0].reverse().slice(0, 10),
     });
   }
 
