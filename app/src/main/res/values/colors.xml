@@ -10,5 +10,6 @@
     <color name="brown">#CC9B6448</color>
     <color name="light_gray">#B3F5F3F3</color>
     <color name="font_black">#80000000</color>
+    <color name="font_white">#FEFAEE</color>
 
 </resources>

@@ -45,15 +45,6 @@ class MainActivity : AppCompatActivity() {
             val nextIntent = Intent(this, VoiceActivity::class.java)
             startActivity(nextIntent)
         }
-        binding.btnFace.setOnClickListener {
-            val nextIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(nextIntent, 0)
-        }
-        binding.btnCafelist.setOnClickListener {
-            val nextIntent = Intent(this, CafeListActivity::class.java)
-            startActivity(nextIntent)
-        }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
