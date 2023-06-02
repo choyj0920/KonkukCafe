@@ -6,43 +6,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#FEFAEE">
 
-    
+
     <ImageView
-        android:layout_width="275dp"
-        android:layout_height="275dp"
-        android:src="@drawable/logo"
-        android:layout_marginTop="150dp"/>
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@drawable/logo3"
+        android:layout_marginTop="100dp"/>
 
-    <Button
-        android:id="@+id/btn_face"
-        android:layout_width="340dp"
-        android:layout_height="52dp"
-        android:background="@drawable/buttonshape"
-        android:layout_marginTop="95dp"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/nanummyeongjobold"
-        android:text="표정으로 시작하기"
-        android:textColor="@color/white" />
+        android:text="AI 감정 분석 기반 카페 추천 플랫폼"
+        android:textColor="@color/brown"
+        android:textSize="15dp"
+        tools:ignore="TextSizeCheck" />
+
 
     <Button
         android:id="@+id/btn_voice"
-        android:layout_width="340dp"
-        android:layout_height="52dp"
-        android:background="@drawable/buttonshape2"
-        android:text="음성으로 시작하기"
-        android:layout_marginTop="13dp"
-        android:fontFamily="@font/nanummyeongjobold"
-        android:textColor="@color/font_black"/>
-
-    <Button
-        android:id="@+id/btn_cafelist"
-        android:layout_width="340dp"
+        android:layout_width="180dp"
         android:layout_height="52dp"
         android:background="@drawable/buttonshape"
-        android:text="카페리스트"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="140dp"
         android:fontFamily="@font/nanummyeongjobold"
-        android:textColor="@color/white"/>
+        android:text="시작하기"
+        android:textColor="@color/white"
+        android:textSize="18dp"/>
+
 
 </LinearLayout>

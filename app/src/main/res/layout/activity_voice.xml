@@ -4,25 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VoiceActivity">
-
+    tools:context=".VoiceActivity"
+    android:background="@color/font_white">
 
 
     <ImageView
-
-        android:layout_width="205dp"
-        android:layout_height="238dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        android:layout_marginTop="100dp"
+        app:srcCompat="@drawable/ready_recording"/>
 
     <TextView
         android:id="@+id/voice_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="256dp"
+        android:layout_marginTop="350dp"
         android:fontFamily="@font/nanummyeongjo"
         android:text="건국가베와 가벼운 문답을 주고 받아보세요."
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +33,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanummyeongjo"
-
         android:text="대화 내용과 목소리 톤을 인식하여 감정을 파악합니다."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -43,29 +41,28 @@
 
     <TextView
         android:id="@+id/result_text"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_marginBottom="332dp"
+        android:layout_marginBottom="200dp"
         android:gravity="center"
         android:text="당신의 목소리를 들려주세요."
         android:textAlignment="center"
         android:textSize="18sp"
+        android:fontFamily="@font/nanummyeongjobold"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/button_to_next"
-
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:layout_height="52dp"
         android:layout_below="@+id/result_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="64dp"
         android:gravity="center"
         android:text="확인"
-        android:textColor="@color/white"
+        android:textColor="@color/font_white"
+        android:textSize="18dp"
         android:fontFamily="@font/nanummyeongjobold"
         android:background="@drawable/buttonshape"
         app:layout_constraintEnd_toEndOf="parent"

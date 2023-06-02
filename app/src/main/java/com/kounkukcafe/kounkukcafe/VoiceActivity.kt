@@ -32,26 +32,8 @@ class VoiceActivity : AppCompatActivity() {
                 android.Manifest.permission.RECORD_AUDIO), PERMISSION)
         }
 
-
-
-
-
-
-
-
-
-
-
-
-//        binding.button.setOnClickListener {
-//            val inputtext:String=binding.textView.text.toString().trim().replace("\n","")
-//            if(inputtext.length != 0){
-//                ApiManager.callEmotionrecognitionText(inputtext,binding.resultText)
-//            }
-//        }
         binding.buttonToNext.setOnClickListener {
             val nextIntent = Intent(this, VoiceRecordingActivity::class.java)
-
             startActivity(nextIntent)
         }
     }

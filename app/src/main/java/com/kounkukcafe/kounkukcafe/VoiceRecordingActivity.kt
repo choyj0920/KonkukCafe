@@ -35,8 +35,6 @@ class VoiceRecordingActivity : AppCompatActivity() {
     }
 
     fun initStt(){
-
-
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
         mRecognizer.setRecognitionListener(listener)
         startStt()
@@ -53,9 +51,6 @@ class VoiceRecordingActivity : AppCompatActivity() {
 
     }
     private fun init(){
-
-
-
         binding.voiceIcon.setOnClickListener {
             if (isTtsReady)
                 tts.speak(binding.askingTextView.text.toString(), TextToSpeech.QUEUE_ADD, null, null)
