@@ -1,9 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecommendActivity">
+    tools:context=".RecommendActivity"
+    android:background="@color/font_white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@color/dark_brown"
+        android:text="추천 카페"
+        android:fontFamily="@font/nanummyeongjoextrabold"
+        android:textColor="@color/font_white"
+        android:textSize="18dp"/>
+
+    <TextView
+        android:id="@+id/recommend_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/nanummyeongjo"
+        android:text="감정을 증폭시키는 카페 바로가기"
+        android:gravity="center" />
+
+
+    <ImageButton
+        android:id="@+id/amplification"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/recommend_textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/buttonshape"
+        android:gravity="center"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/rm_happy"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/recommend_textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanummyeongjo"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/amplification"
+        android:text="감정을 완화시키는 카페 바로가기"
+        android:gravity="center" />
+
+
+    <ImageButton
+        android:id="@+id/offset"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/recommend_textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/buttonshape"
+        android:gravity="center"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/rm_angry"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/home"
+        android:layout_width="200dp"
+        android:layout_height="52dp"
+        android:layout_below="@+id/offset"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/buttonshape"
+        android:gravity="center"
+        android:src="@drawable/baseline_home_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+</RelativeLayout>

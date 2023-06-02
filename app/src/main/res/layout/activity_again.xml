@@ -59,25 +59,27 @@
         android:layout_marginBottom="5dp"/>
 
     <ImageButton
-        android:gravity="center"
         android:id="@+id/camera"
         android:layout_width="200dp"
         android:layout_height="52dp"
         android:layout_below="@+id/face_textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
+        android:background="@drawable/buttonshape"
+        android:gravity="center"
         android:src="@drawable/baseline_photo_camera_24"
-        android:background="@drawable/buttonshape"/>
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
-        android:gravity="center"
         android:id="@+id/recording"
         android:layout_width="200dp"
         android:layout_height="52dp"
         android:layout_below="@+id/camera"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
+        android:background="@drawable/buttonshape"
+        android:gravity="center"
         android:src="@drawable/baseline_keyboard_voice_24"
-        android:background="@drawable/buttonshape"/>
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </RelativeLayout>
