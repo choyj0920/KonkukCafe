@@ -36,7 +36,7 @@ class ResultActivity : AppCompatActivity() {
 
     private fun initButton() {
         binding.resultYes.setOnClickListener {
-            val next= Intent(this, CafeListActivity::class.java)
+            val next= Intent(this, RecommendActivity::class.java)
             startActivity(next)
         }
         binding.resultNo.setOnClickListener {

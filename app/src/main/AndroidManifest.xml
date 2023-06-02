@@ -19,7 +19,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.KounkukCafe"
+        android:theme="@style/Theme.KounkukCafe.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="27">
         <activity
@@ -46,12 +46,6 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity
-            android:name=".ExampleImageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ExampleActivity"
-            android:exported="false" />
         <activity
             android:name=".CafeListActivity"
             android:exported="false" />
