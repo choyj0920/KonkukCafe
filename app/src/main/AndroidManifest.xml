@@ -10,8 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -24,6 +22,15 @@
         android:theme="@style/Theme.KounkukCafe"
         android:usesCleartextTraffic="true"
         tools:targetApi="27">
+        <activity
+            android:name=".RecommendActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AgainActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -33,10 +40,11 @@
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.KounkukCafe.NoActionBar">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ExampleImageActivity"
@@ -53,10 +61,12 @@
         <activity
             android:name=".VoiceActivity"
             android:exported="false" />
-        <activity android:name=".VoiceLoadingActivity"
-            android:exported="false"/>
-        <activity android:name=".VoiceRecordingActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".VoiceLoadingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VoiceRecordingActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -64,6 +74,7 @@
             android:theme="@style/Theme.KounkukCafe.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

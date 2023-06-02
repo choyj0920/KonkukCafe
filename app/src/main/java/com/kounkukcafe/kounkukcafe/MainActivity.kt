@@ -42,26 +42,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnVoice.setOnClickListener {
-            val nextIntent = Intent(this, VoiceActivity::class.java)
+            val nextIntent = Intent(this, AgainActivity::class.java)
             startActivity(nextIntent)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // 카메라 촬영을 하면 이미지뷰에 사진 삽입
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            // Bundle로 데이터를 입력
-            val extras: Bundle? = data?.extras
-
-            // Bitmap으로 컨버전
-            val imageBitmap = extras?.get("data") as Bitmap
-
-            // 이미지뷰에 Bitmap으로 이미지를 입력
-            val i=Intent(this,FaceActivity::class.java)
-            i.putExtra("photo",imageBitmap)
-            startActivity(i)
         }
     }
 
