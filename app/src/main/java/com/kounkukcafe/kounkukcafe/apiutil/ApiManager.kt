@@ -161,7 +161,6 @@ object ApiManager {
                                 if(emotion!=null){
                                     Log.d("TAG","감정인식 api Sucess!")
                                     tv.setText(emotion.toString())
-
                                 }else{
                                     Log.d("TAG","감정인식 api fail!")
                                     val json = JSONObject(response.body().toString()) // toString() is not the response body, it is a debug representation of the response body
@@ -253,7 +252,6 @@ object ApiManager {
     fun callEmotionrecognitionImage(imageFile: File, tv:TextView) {
 
 
-
         val image = MultipartBody.Part.createFormData(
             "image[]",
             imageFile.name,
@@ -261,9 +259,11 @@ object ApiManager {
         )
         // emotion api 작성
         imageFile.name
-        val config="{\"type\": \"EMOTION_RECOGNITION\",\"input\": {\"type\": \"IMAGE\",\"imageConfigs\": [{\"id\": \"${imageFile.nameWithoutExtension}\",\"format\": \"jpg\"}   ]  },   \"additionalConfig\": {}}".trimIndent().toRequestBody("text/plain".toMediaType())
+        val config =
+            "{\"type\": \"EMOTION_RECOGNITION\",\"input\": {\"type\": \"IMAGE\",\"imageConfigs\": [{\"id\": \"${imageFile.nameWithoutExtension}\",\"format\": \"jpg\"}   ]  },   \"additionalConfig\": {}}".trimIndent()
+                .toRequestBody("text/plain".toMediaType())
 
-        if(checkToken()==null){ // 토큰이 없거나 만료되었으면 발급
+        if (checkToken() == null) { // 토큰이 없거나 만료되었으면 발급
             val tokencall = tokenapiService.getToken(
                 tokenauthorization,
                 "application/x-www-form-urlencoded",
@@ -275,7 +275,7 @@ object ApiManager {
                     response: Response<TokenResponse?>
                 ) {
 
-                    token= response.body()?.access_token
+                    token = response.body()?.access_token
                     val expiration = System.currentTimeMillis() + 50 * 60 * 1000 // 50분
                     expirationTime = expiration
 
@@ -297,21 +297,20 @@ object ApiManager {
                                 // response 처리 -- text
 
                                 val emotion = response.body()?.results?.uni_modal?.image?.result
-                                if(emotion!=null){
-                                    Log.d("TAG","감정인식 api Sucess!")
+                                if (emotion != null) {
+                                    Log.d("TAG", "감정인식 api Sucess!")
                                     tv.setText(emotion.toString())
 
-                                }else{
-                                    Log.d("TAG","감정인식 api fail!")
+                                } else {
+                                    Log.d("TAG", "감정인식 api fail!")
                                     tv.setText("error : ${response}")
-
                                 }
 
 
                             } else {
                                 // 에러 처리
                                 tv.setText("error : ${response}")
-                                Log.d("TAG","감정인식 api 에러")
+                                Log.d("TAG", "감정인식 api 에러")
 
                             }
                         }
@@ -319,23 +318,20 @@ object ApiManager {
                         override fun onFailure(call: Call<ERResponse?>, t: Throwable) {
                             // 에러 처리
                             tv.setText("error : ${t}")
-
                         }
                     })
-
 
 
                 }
 
                 override fun onFailure(call: Call<TokenResponse?>, t: Throwable) {
-                    Log.d("TAG","토큰 발급 실패------ : $t")
-
+                    Log.d("TAG", "토큰 발급 실패------ : $t")
 
                     // 에러 처리
                 }
             })
 
-        }else{ //토큰이 만료x
+        } else { //토큰이 만료x
 
             //토큰
             val call = emotionapiService.recognizeEmotionImage(
@@ -353,21 +349,18 @@ object ApiManager {
                     if (response.isSuccessful) {
                         // response 처리
                         val emotion = response.body()?.results?.uni_modal?.image?.result
-                        if(emotion!=null){
-                            Log.d("TAG","감정인식 api Sucess!")
+                        if (emotion != null) {
+                            Log.d("TAG", "감정인식 api Sucess!")
                             tv.setText(emotion.toString())
-
-                        }else{
-                            Log.d("TAG","감정인식 api fail!")
+                        } else {
+                            Log.d("TAG", "감정인식 api fail!")
                             tv.setText("error : ${response}")
-
                         }
 
                     } else {
                         // 에러 처리
                         tv.setText("error : ${response}")
-                        Log.d("TAG","감정인식 api 실패(토큰 발급 x)")
-
+                        Log.d("TAG", "감정인식 api 실패(토큰 발급 x)")
 
                     }
                 }
@@ -375,15 +368,10 @@ object ApiManager {
                 override fun onFailure(call: Call<ERResponse?>, t: Throwable) {
                     // 에러 처리
                     tv.setText("error : ${t}")
-
                 }
             })
 
         }
-
-
-
-
     }
 
 }

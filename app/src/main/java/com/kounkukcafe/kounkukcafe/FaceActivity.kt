@@ -10,6 +10,7 @@ import com.kounkukcafe.kounkukcafe.apiutil.ApiManager
 import java.io.File
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.kounkukcafe.kounkukcafe.databinding.ActivityFaceBinding
@@ -28,7 +29,7 @@ class FaceActivity : AppCompatActivity(), View.OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_example_image)
+        setContentView(R.layout.activity_face)
         binding = ActivityFaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -45,14 +46,14 @@ class FaceActivity : AppCompatActivity(), View.OnClickListener{
 
         binding.submit.setOnClickListener {
             ApiManager.callEmotionrecognitionImage(ivToFile(binding.ivInput),binding.resultText)
-
+            val next=Intent(this,VoiceLoadingActivity::class.java)
+            next.putExtra("result",binding.resultText.text)
+            startActivity(next)
+//            val result=ApiManager.callEmotionrecognitionImage(ivToFile(binding.ivInput),binding.resultText)
+//            val next=Intent(this,VoiceLoadingActivity::class.java)
+//            next.putExtra("result",result)
+//            startActivity(next)
         }
-        binding.recommend.setOnClickListener {
-            val nextIntent = Intent(this, CafeListActivity::class.java)
-            nextIntent.putExtra("emotion",binding.resultText.text.toString().trim())
-            startActivity(nextIntent)
-        }
-
     }
 
     private fun ivToFile(image: ImageView): File {

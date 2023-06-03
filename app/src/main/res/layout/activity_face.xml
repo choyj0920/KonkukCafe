@@ -4,21 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ExampleActivity">
-
-    <Button
-        android:gravity="center"
-        android:id="@+id/btnPhoto"
-        android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:background="@drawable/buttonshape2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:text="재촬영"
-        android:fontFamily="@font/nanummyeongjobold"
-        android:textColor="@color/font_black"
-        />
-
+    tools:context=".FaceActivity"
+    android:background="@color/font_white">
 
     <ImageView
         android:layout_centerHorizontal="true"
@@ -26,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="140dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:adjustViewBounds="true"
@@ -34,7 +21,6 @@
         android:minHeight="100dp"
         android:scaleType="fitCenter"
         app:srcCompat="@android:drawable/ic_menu_report_image" />
-
     <Button
         android:gravity="center"
         android:id="@+id/submit"
@@ -47,9 +33,22 @@
         android:text="감정분석"
         android:textColor="@color/white"
         android:fontFamily="@font/nanummyeongjobold"/>
-
+    <Button
+        android:gravity="center"
+        android:id="@+id/btnPhoto"
+        android:layout_width="200dp"
+        android:layout_height="52dp"
+        android:background="@drawable/buttonshape2"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/submit"
+        android:layout_marginTop="30dp"
+        android:text="재촬영"
+        android:fontFamily="@font/nanummyeongjobold"
+        android:textColor="@color/font_black"
+        />
     <TextView
         android:id="@+id/result_text"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/submit"
@@ -58,20 +57,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="result"
         android:textAlignment="center"
         android:textSize="18sp" />
 
-    <Button
-        android:gravity="center"
-        android:id="@+id/recommend"
-        android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/result_text"
-        android:background="@drawable/buttonshape"
-        android:text="카페리스트"
-        android:textColor="@color/white"
-        android:fontFamily="@font/nanummyeongjobold"/>
 
 </RelativeLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AgainActivity"
+    android:background="@color/font_white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@color/dark_brown"
+        android:text="결과가 마음에 들지 않나요?"
+        android:fontFamily="@font/nanummyeongjoextrabold"
+        android:textColor="@color/font_white"
+        android:textSize="18dp"/>
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/iv_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="180dp"
+        android:minHeight="180dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/face"/>
+
+    <TextView
+        android:id="@+id/face_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_input"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/nanummyeongjo"
+        android:text="얼굴 인식으로 색다른 감정 분석을 받아보세요."
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/face_textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanummyeongjo"
+        android:layout_below="@id/face_textView"
+        android:text="목소리로 감정 분석을 다시 받아볼 수도 있습니다."
+        android:gravity="center" />
+
+    <View
+        android:layout_width="352dp"
+        android:layout_height="1dp"
+        android:background="@color/dark_brown"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
+
+    <ImageButton
+        android:id="@+id/camera"
+        android:layout_width="200dp"
+        android:layout_height="52dp"
+        android:layout_below="@+id/face_textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/buttonshape"
+        android:gravity="center"
+        android:src="@drawable/baseline_photo_camera_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/recording"
+        android:layout_width="200dp"
+        android:layout_height="52dp"
+        android:layout_below="@+id/camera"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/buttonshape"
+        android:gravity="center"
+        android:src="@drawable/baseline_keyboard_voice_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+</RelativeLayout>
