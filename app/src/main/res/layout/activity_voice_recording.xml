@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/asking_textView" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/voice_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -49,6 +49,20 @@
         android:layout_height="30dp"
         android:layout_marginTop="152dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/voice_icon" />
+
+    <Button
+        android:id="@+id/question_retry_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="152dp"
+        android:background="@drawable/buttonshape"
+        android:text="다시 대화하기"
+
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/voice_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
