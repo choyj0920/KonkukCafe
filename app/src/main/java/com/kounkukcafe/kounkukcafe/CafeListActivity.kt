@@ -8,16 +8,17 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View.OnTouchListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.kounkukcafe.kounkukcafe.apiutil.Cafe
-import com.kounkukcafe.kounkukcafe.apiutil.CafeApiManager
-import com.kounkukcafe.kounkukcafe.apiutil.CafeResponseData
-import com.kounkukcafe.kounkukcafe.apiutil.EmotionBody
+import com.kounkukcafe.kounkukcafe.apiutil.*
 import com.kounkukcafe.kounkukcafe.databinding.ActivityCafeListBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -29,11 +30,13 @@ import retrofit2.Response
 class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItemEventListener {
 
     private lateinit var binding: ActivityCafeListBinding
-    private lateinit var cafes: List<Cafe>
+    private var cafes: List<Cafe> = listOf()
     private lateinit var mapView :MapView
     private lateinit var recyclerView:RecyclerView
+    private var isamplification:Boolean=false
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,17 +57,22 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
         }
 
         //이전 액티비티에서 값가져오기
-        var emotion = intent.getStringExtra("emotion");
+        var emotion = ApiManager.curSimpleEmotion!!
+        isamplification=intent.getBooleanExtra ("isamplification",true)
+
 
 
         binding=ActivityCafeListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.title.text="${emotion.result} "+if(isamplification) "증폭" else "상쇄"
 
         mapView = binding.mapView
 
         mapView.setMapType(MapView.MapType.Standard)
-        
+        mapView.removeAllPOIItems();
+        recyclerView = binding.recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
 
         val bottomSheet = binding.bottomSheet
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
@@ -73,12 +81,15 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
 
         bottomSheetBehavior.peekHeight = 500  // 피크 높이를 원하는 값으로 설정합니다.
 
-        update(emotion?:0)
+        update(emotion.result)
+
 
 
     }
 
     fun initMapview(){
+        mapView.removeAllPOIItems();
+
         for (i in cafes.indices) {
             val marker = createMarker(i)
             mapView.addPOIItem(marker)
@@ -89,20 +100,12 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
     }
 
 
-    fun update(emotion:Any){
-        var _emotion=""
-        if(emotion is Int && emotion.toInt()<6){
-            _emotion= CafeApiManager.emotionOrder[emotion.toInt()]
-        }else if (emotion is String && CafeApiManager.emotionOrder.contains(emotion.toString())){
-            _emotion= emotion.toString()
-        }else{
-            Log.d("E","오류발생 :카페리스트를 가져올 감정을 제대로 골라주세요")
-            return
-        }
-        Log.d("TAG","---------------${_emotion}------------------")
+    fun update(emotion:String){
+
+        Log.d("TAG","---------------${emotion}------------------")
 
         // 해당 감정으로 카페리스트 가져오기
-        CafeApiManager.cafeApiService.getCafelistfromEmotion(EmotionBody(_emotion))
+        CafeApiManager.cafeApiService.getCafelistfromEmotion(EmotionBody(emotion))
             .enqueue(object : Callback<CafeResponseData?> {
             override fun onResponse(
                 call: Call<CafeResponseData?>,
@@ -110,10 +113,20 @@ class CafeListActivity : AppCompatActivity(), PermissionListener,MapView.POIItem
             ) {
 
                 Log.d("TAG","cafe리스트 sucess")
-                cafes= response.body()?.cafelist!!
-                initMapview()
+                cafes = if(this@CafeListActivity.isamplification){
+                    Log.d("TAG","감정 증폭리스트")
 
-                update_recyclerview()
+                    response.body()?.cafelist!!
+                }else{
+                    Log.d("TAG","감정 상쇄리스트")
+
+                    response.body()?.negativecafelist!!
+                }
+                lifecycleScope.launch(Dispatchers.Main) {
+                    initMapview()
+                    update_recyclerview()
+                }
+
 
             }
 
