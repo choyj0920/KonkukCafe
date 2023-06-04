@@ -10,10 +10,13 @@ import com.kounkukcafe.kounkukcafe.apiutil.ApiManager
 import java.io.File
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import androidx.lifecycle.lifecycleScope
+import com.kounkukcafe.kounkukcafe.apiutil.simpleEmotion
 import com.kounkukcafe.kounkukcafe.databinding.ActivityFaceBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
 class FaceActivity : AppCompatActivity(), View.OnClickListener{
@@ -45,15 +48,34 @@ class FaceActivity : AppCompatActivity(), View.OnClickListener{
         }
 
         binding.submit.setOnClickListener {
-            ApiManager.callEmotionrecognitionImage(ivToFile(binding.ivInput),binding.resultText)
-            val next=Intent(this,VoiceLoadingActivity::class.java)
-            next.putExtra("result",binding.resultText.text)
-            startActivity(next)
+            lifecycleScope.launch(Dispatchers.Main) { // 비동기 형태라 외부 쓰레드에서 실행해야함
+                var emotion = ApiManager.callErFromImage(ivToFile(binding.ivInput))
+                if (emotion!=null){
+                    goNext(emotion)
+                }
+                // 가장최근에 한 감정인식시 해당 감정 정보가 여기에 저장되어서 어디에서도 사용
+                ApiManager.curSimpleEmotion
+
+
+            }
+
+//            ApiManager.callEmotionrecognitionImage(ivToFile(binding.ivInput),binding.resultText)
+//            val next=Intent(this,VoiceLoadingActivity::class.java)
+//            next.putExtra("result",binding.resultText.text)
+//            startActivity(next)
+
 //            val result=ApiManager.callEmotionrecognitionImage(ivToFile(binding.ivInput),binding.resultText)
 //            val next=Intent(this,VoiceLoadingActivity::class.java)
 //            next.putExtra("result",result)
 //            startActivity(next)
         }
+    }
+    fun goNext(emotion: simpleEmotion) {
+
+        val next=Intent(this,VoiceLoadingActivity::class.java)
+        next.putExtra("emotion",emotion.result)
+        startActivity(next)
+
     }
 
     private fun ivToFile(image: ImageView): File {

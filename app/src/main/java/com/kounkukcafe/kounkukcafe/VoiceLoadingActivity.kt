@@ -12,7 +12,7 @@ class VoiceLoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityVoiceLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val result=intent.getStringExtra("result")
+        val result=intent.getStringExtra("emotion")
         moveResult(2,result)
     }
 

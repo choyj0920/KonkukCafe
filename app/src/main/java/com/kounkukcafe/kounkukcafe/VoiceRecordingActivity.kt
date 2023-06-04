@@ -10,8 +10,12 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.kounkukcafe.kounkukcafe.apiutil.ApiManager
+import com.kounkukcafe.kounkukcafe.apiutil.simpleEmotion
 import com.kounkukcafe.kounkukcafe.databinding.ActivityVoiceRecordingBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 class VoiceRecordingActivity : AppCompatActivity() {
@@ -33,10 +37,10 @@ class VoiceRecordingActivity : AppCompatActivity() {
 
     }
 
-    fun goNext(){
+    fun goNext(emotion: simpleEmotion) {
 
         val nextIntent = Intent(this, VoiceLoadingActivity::class.java)
-        nextIntent.putExtra("emotion",emotion.trim())
+        nextIntent.putExtra("emotion",emotion.result)
         startActivity(nextIntent)
 
     }
@@ -159,12 +163,27 @@ class VoiceRecordingActivity : AppCompatActivity() {
 
             val inputtext:String=emotion.trim().replace("\n","")
             if(inputtext.length != 0){
-                ApiManager.callEmotionrecognitionText(inputtext,binding.voiceRecordedText)
+//                ApiManager.callEmotionrecognitionText(inputtext,binding.voiceRecordedText)
+
+                lifecycleScope.launch(Dispatchers.Main) { // 비동기 형태라 외부 쓰레드에서 실행해야함
+                    val emotion = ApiManager.callErFromText(inputtext)
+
+                    if (emotion != null) {
+                        binding.voiceRecordedText.text = emotion.toString()
+                        binding.voiceTextView.text = "인식 완료"
+                        binding.questionRetryButton.visibility = View.VISIBLE
+                        goNext(emotion)
+
+                    } else {
+                        // 에러 처리
+                    }
+
+                }
+
+
             }
 
-            binding.voiceTextView.text = "인식 완료"
-            binding.questionRetryButton.visibility = View.VISIBLE
-            goNext()
+
         }
 
         override fun onPartialResults(partialResults: Bundle?) {}

@@ -28,7 +28,60 @@ data class UniModal(
     @SerializedName("text")
     val text: EmotionText
 )
+fun getSecondLargestIndex(list: List<Double>): Int {
+    return list.mapIndexed { index, value -> Pair(index, value) }
+        .sortedByDescending { it.second }
+        .getOrNull(1)?.first
+        ?: throw RuntimeException("The list must contain at least two elements")
+}
+data class simpleEmotion(
+    var result: String,
+    var accuracy:Double
+){
+    constructor(emotionText: EmotionText):this("1", 0.0){
+        when(emotionText.result){
+            "분노","싫음","두려움" -> {
+                this.result="분노"
+                this.accuracy=(emotionText.probs[0]+emotionText.probs[1]+emotionText.probs[2])
+            }
+            "행복" -> {
+                this.result="행복"
+                this.accuracy=(emotionText.probs[3])
 
+            }
+            "중립" ->{
+                var index =getSecondLargestIndex(emotionText.probs)
+                var emotion =CafeApiManager.emotionOrder[index]
+                when(emotion){
+                    "분노","싫음","두려움" -> {
+                        this.result="분노"
+                        this.accuracy=(emotionText.probs[0]+emotionText.probs[1]+emotionText.probs[2])
+                    }
+                    "행복" -> {
+                        this.result="행복"
+                        this.accuracy=(emotionText.probs[3])
+                    }
+
+                    "슬픔","놀람" -> {
+                        this.result="슬픔"
+                        this.accuracy=(emotionText.probs[4]+emotionText.probs[5])
+                    }
+                }
+            }
+            "슬픔","놀람" -> {
+                this.result="슬픔"
+                this.accuracy=(emotionText.probs[4]+emotionText.probs[5])
+            }
+        }
+
+    }
+
+
+    override fun toString(): String {
+        return "[${result}] ,정확도 : ${accuracy}"
+    }
+
+}
 data class EmotionText(
     @SerializedName("result")
     val result: String,

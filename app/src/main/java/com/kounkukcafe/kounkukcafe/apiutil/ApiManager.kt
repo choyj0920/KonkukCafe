@@ -3,6 +3,8 @@ package com.kounkukcafe.kounkukcafe.apiutil
 import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.TextView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -28,6 +30,15 @@ interface EmotionApiService {
 
     @Multipart
     @POST("emotion/er/v1/recognition")
+    suspend fun recognizeEmotionText_v2(
+        @Part("config") config: RequestBody,
+        @Header("Authorization") auth: String,
+        @Header("x-api-key") apiKey: String,
+        @Header("Cookie") cookie: String
+    ): Response<ERResponse?>
+
+    @Multipart
+    @POST("emotion/er/v1/recognition")
     fun recognizeEmotionImage(
         @Part("config") config: RequestBody,
         @Part image: MultipartBody.Part,
@@ -35,12 +46,27 @@ interface EmotionApiService {
         @Header("x-api-key") apiKey: String,
         @Header("Cookie") cookie: String
     ): Call<ERResponse?>
+
+    @Multipart
+    @POST("emotion/er/v1/recognition")
+    suspend fun recognizeEmotionImage_v2(
+        @Part("config") config: RequestBody,
+        @Part image: MultipartBody.Part,
+        @Header("Authorization") auth: String,
+        @Header("x-api-key") apiKey: String,
+        @Header("Cookie") cookie: String
+    ): Response<ERResponse?>
 }
 interface TokenApiService {
     @POST("v1/cognito")
     fun getToken(
         @Header("Authorization") authorization: String,
         @Header("Content-Type") content_Type: String): Call<TokenResponse?>
+
+    @POST("v1/cognito")
+    suspend fun getToken_v2(
+        @Header("Authorization") authorization: String,
+        @Header("Content-Type") content_Type: String): Response<TokenResponse?>
 }
 
 // 해당 클래스는 싱글톤패턴 클래스로 getinstance로 가져와야함
@@ -55,6 +81,8 @@ object ApiManager {
     private val emotionApiBaseUrl = "https://korea.api.lgthinqai.net:443/"
     // 감정인식 api-key
     private val emotionapikey="MTtlZjUyYzFmYTViMjc0NGNkYTg3NDE3NGYwOWU5NGQ0YTsxNjgxMDk2OTAzMzk1"
+
+    var curSimpleEmotion:simpleEmotion? =null
 
 
     private var token: String? = null
@@ -84,38 +112,48 @@ object ApiManager {
     }
 
     //토큰 체크
-    fun checkToken(): String? {
-        if (System.currentTimeMillis() < expirationTime) {
+    private fun checkToken(): String? {
+        if (token !=null && System.currentTimeMillis() < expirationTime) {
+            Log.d("TAG","checkToken 기존사용")
             return token
         }
+        Log.d("TAG","checkToken 만료 or 발급필요")
+
         return null
     }
 
 
     // 토큰 갱신 -만들어는 뒀는데 감정인식에 이미 작성되어있어서 쓸모없음
-    fun getToken() {
+    suspend fun getToken(): String? = withContext(Dispatchers.IO) {
+        if (checkToken() != null) {
+            return@withContext token
+        }
 
-        val call = tokenapiService.getToken(
-            tokenauthorization,
-            "application/x-www-form-urlencoded",
-        )
+        try {
 
-        call.enqueue(object : Callback<TokenResponse?> {
-            override fun onResponse(
-                call: Call<TokenResponse?>,
-                response: Response<TokenResponse?>
-            ) {
+            val response = tokenapiService.getToken_v2(
+                tokenauthorization,
+                "application/x-www-form-urlencoded",
+            )
 
-                token= response.body()?.access_token
+            if (response.isSuccessful) {
+                token = response.body()?.access_token
                 val expiration = System.currentTimeMillis() + 50 * 60 * 1000 // 50분
                 expirationTime = expiration
-            }
 
-            override fun onFailure(call: Call<TokenResponse?>, t: Throwable) {
+                token
 
-                // 에러 처리
+            } else {
+
+                null
             }
-        })
+        } catch (e: Exception) {
+            // 에러 처리
+
+            null
+        }
+
+
     }
 
     // 감정인식 inputtext넣고 , 텍스트뷰 넣으면,감정인식 결과 그 텍스트뷰에 글 뿌려줌
@@ -249,6 +287,93 @@ object ApiManager {
 
     }
 
+    suspend fun callErFromText(inputText: String) :simpleEmotion? = withContext(Dispatchers.IO) {
+
+        if(getToken() ==null){
+            Log.d("TAG","에러로 토큰발급 실패 ")
+            return@withContext null
+        }
+
+        // emotion api 작성
+
+
+        try {
+            val config = "{\"type\": \"EMOTION_RECOGNITION\",\"input\": {\"type\": \"TEXT\", \"text\": \"${inputText}\" }}".toRequestBody("text/plain".toMediaType())
+            val response = emotionapiService.recognizeEmotionText_v2(
+                config,
+                "Bearer $token",
+                emotionapikey,
+                "COOKIE"
+            )
+
+            if (response.isSuccessful) {
+                Log.d("TAG","정상 실행 : ${simpleEmotion(response.body()?.results?.uni_modal?.text!!)}")
+                this@ApiManager.curSimpleEmotion=simpleEmotion(response.body()?.results?.uni_modal?.text!!)
+                this@ApiManager.curSimpleEmotion
+            } else {
+                // 에러 처리
+                this@ApiManager.curSimpleEmotion=null
+                null
+            }
+        } catch (e: Exception) {
+            // 네트워크 에러 처리
+            this@ApiManager.curSimpleEmotion=null
+
+            null
+        }
+    }
+    suspend fun callErFromImage(imageFile: File) :simpleEmotion? = withContext(Dispatchers.IO) {
+
+        if(getToken() ==null){
+            Log.d("TAG","에러로 토큰발급 실패 ")
+            return@withContext null
+        }
+
+        // emotion api 작성
+
+
+        try {
+            val image = MultipartBody.Part.createFormData(
+                "image[]",
+                imageFile.name,
+                imageFile.asRequestBody("image/jpeg".toMediaType())
+            )
+            // emotion api 작성
+            imageFile.name
+            val config =
+                "{\"type\": \"EMOTION_RECOGNITION\",\"input\": {\"type\": \"IMAGE\",\"imageConfigs\": [{\"id\": \"${imageFile.nameWithoutExtension}\",\"format\": \"jpg\"}   ]  },   \"additionalConfig\": {}}".trimIndent()
+                    .toRequestBody("text/plain".toMediaType())
+
+
+            val response = emotionapiService.recognizeEmotionImage_v2(
+                config,
+                image,
+                "Bearer $token",
+                "$emotionapikey",
+                "COOKIE"
+            )
+
+            if (response.isSuccessful) {
+                this@ApiManager.curSimpleEmotion=simpleEmotion(response.body()?.results?.uni_modal?.image!!)
+                Log.d("TAG","감정인식(이미지) 성공${this@ApiManager.curSimpleEmotion.toString()}")
+
+                this@ApiManager.curSimpleEmotion
+            } else {
+                // 에러 처리
+                this@ApiManager.curSimpleEmotion=null
+                null
+            }
+        } catch (e: Exception) {
+            // 네트워크 에러 처리
+            Log.d("TAG",e.toString())
+            this@ApiManager.curSimpleEmotion=null
+
+            null
+        }
+    }
+
+
+
     fun callEmotionrecognitionImage(imageFile: File, tv:TextView) {
 
 
@@ -298,11 +423,9 @@ object ApiManager {
 
                                 val emotion = response.body()?.results?.uni_modal?.image?.result
                                 if (emotion != null) {
-                                    Log.d("TAG", "감정인식 api Sucess!")
                                     tv.setText(emotion.toString())
 
                                 } else {
-                                    Log.d("TAG", "감정인식 api fail!")
                                     tv.setText("error : ${response}")
                                 }
 
@@ -310,7 +433,6 @@ object ApiManager {
                             } else {
                                 // 에러 처리
                                 tv.setText("error : ${response}")
-                                Log.d("TAG", "감정인식 api 에러")
 
                             }
                         }
