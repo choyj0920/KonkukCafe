@@ -39,8 +39,8 @@ class VoiceRecordingActivity : AppCompatActivity() {
 
     fun goNext(emotion: simpleEmotion) {
 
-        val nextIntent = Intent(this, VoiceLoadingActivity::class.java)
-        nextIntent.putExtra("emotion",emotion.result)
+        val nextIntent = Intent(this, ResultActivity::class.java)
+        nextIntent.putExtra("result",emotion.result)
         startActivity(nextIntent)
 
     }
@@ -166,16 +166,22 @@ class VoiceRecordingActivity : AppCompatActivity() {
 //                ApiManager.callEmotionrecognitionText(inputtext,binding.voiceRecordedText)
 
                 lifecycleScope.launch(Dispatchers.Main) { // 비동기 형태라 외부 쓰레드에서 실행해야함
+
+                    binding.progressBar.visibility = View.VISIBLE
+
                     val emotion = ApiManager.callErFromText(inputtext)
 
                     if (emotion != null) {
                         binding.voiceRecordedText.text = emotion.toString()
                         binding.voiceTextView.text = "인식 완료"
                         binding.questionRetryButton.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.INVISIBLE
                         goNext(emotion)
 
                     } else {
                         // 에러 처리
+                        binding.progressBar.visibility = View.INVISIBLE
+                        binding.voiceRecordedText.text = "감정 분석 실패"
                     }
 
                 }

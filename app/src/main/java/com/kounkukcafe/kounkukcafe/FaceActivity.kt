@@ -48,9 +48,12 @@ class FaceActivity : AppCompatActivity(), View.OnClickListener{
         }
 
         binding.submit.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.Main) { // 비동기 형태라 외부 쓰레드에서 실행해야함
+
                 var emotion = ApiManager.callErFromImage(ivToFile(binding.ivInput))
                 if (emotion!=null){
+                    binding.progressBar.visibility = View.INVISIBLE
                     goNext(emotion)
                 }
                 // 가장최근에 한 감정인식시 해당 감정 정보가 여기에 저장되어서 어디에서도 사용
@@ -72,8 +75,8 @@ class FaceActivity : AppCompatActivity(), View.OnClickListener{
     }
     fun goNext(emotion: simpleEmotion) {
 
-        val next=Intent(this,VoiceLoadingActivity::class.java)
-        next.putExtra("emotion",emotion.result)
+        val next=Intent(this,ResultActivity::class.java)
+        next.putExtra("result",emotion.result)
         startActivity(next)
 
     }

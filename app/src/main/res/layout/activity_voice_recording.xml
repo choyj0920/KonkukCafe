@@ -34,7 +34,7 @@
         android:id="@+id/voice_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="44dp"
         android:fontFamily="@font/nanummyeongjobold"
         android:text="인식 중"
         android:textColor="@color/brown"
@@ -47,8 +47,9 @@
         android:id="@+id/voice_recordedText"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/voice_icon" />
 
@@ -67,4 +68,16 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/voice_recordedText" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/voice_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
