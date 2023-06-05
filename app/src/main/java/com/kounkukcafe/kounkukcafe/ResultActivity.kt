@@ -9,17 +9,18 @@ import kotlin.math.round
 
 class ResultActivity : AppCompatActivity() {
     lateinit var binding:ActivityResultBinding
-
+    lateinit var result:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         initLayout()
         initButton()
     }
 
     private fun initLayout() {
-        val result=intent.getStringExtra("result")
+        result=intent.getStringExtra("result")!!
         var img=0
 
         when(result){
@@ -42,6 +43,7 @@ class ResultActivity : AppCompatActivity() {
     private fun initButton() {
         binding.resultYes.setOnClickListener {
             val next= Intent(this, RecommendActivity::class.java)
+            next.putExtra("result",result)
             startActivity(next)
         }
         binding.resultNo.setOnClickListener {

@@ -18,7 +18,10 @@
             android:text=""
             android:textSize="24sp"
             android:gravity="center"
-            android:padding="16dp" />
+            android:padding="16dp"
+            android:background="@color/dark_brown"
+            android:textColor="@color/font_white"
+            android:fontFamily="@font/nanummyeongjoextrabold"/>
 
 
 

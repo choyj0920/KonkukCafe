@@ -13,7 +13,29 @@ class RecommendActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityRecommendBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initImage()
         initLayout()
+    }
+    private fun initImage(){
+        val result=intent.getStringExtra("result")!!
+        var amp=0
+        var offset=0
+        when(result){
+            "행복" ->{//행복인 경우
+                amp=R.drawable.rm_happy
+                offset=R.drawable.rm_sad
+            }
+            "슬픔"->{//슬픔인 경우
+                amp=R.drawable.rm_sad
+                offset=R.drawable.rm_happy
+            }
+            "분노"->{//분노인 경우
+                amp=R.drawable.rm_angry
+                offset=R.drawable.rm_happy
+            }
+        }
+        binding.amplification.setImageResource(amp)
+        binding.offset.setImageResource(offset)
     }
 
     private fun initLayout() {
