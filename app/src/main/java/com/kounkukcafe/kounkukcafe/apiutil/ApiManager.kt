@@ -74,19 +74,19 @@ object ApiManager {
 
 
     // 토큰 발급용 Authorization - 토큰 발급에만 쓰이는 Clienid/password 인코딩한거
-    private val tokenauthorization ="Basic N2wyYjNmbG5zdnUwMWVsNGg3N3M2OTBqdTY6MWMxa3VvNWF1bDB0M2ZqcTZqdTZlc3A0ZGg5bjlsaGE5a3N0YzduNmwyY2VvYW1rZW12cA=="
+    val tokenauthorization ="Basic N2wyYjNmbG5zdnUwMWVsNGg3N3M2OTBqdTY6MWMxa3VvNWF1bDB0M2ZqcTZqdTZlc3A0ZGg5bjlsaGE5a3N0YzduNmwyY2VvYW1rZW12cA=="
     // 토큰 발급용 baseURl
     private val tokenApiBaseUrl = "https://oauth.api.lgthinqai.net:443/"
     // 감정인식용 baseURL
     private val emotionApiBaseUrl = "https://korea.api.lgthinqai.net:443/"
     // 감정인식 api-key
-    private val emotionapikey="MTtlZjUyYzFmYTViMjc0NGNkYTg3NDE3NGYwOWU5NGQ0YTsxNjgxMDk2OTAzMzk1"
+    val emotionapikey="MTtlZjUyYzFmYTViMjc0NGNkYTg3NDE3NGYwOWU5NGQ0YTsxNjgxMDk2OTAzMzk1"
 
     var curSimpleEmotion:simpleEmotion? =null
 
 
-    private var token: String? = null
-    private var expirationTime: Long = 0
+    var token: String? = null
+    var expirationTime: Long = 0
 
     private val tokenclient = OkHttpClient.Builder().build()
     var tokenapiService: TokenApiService
@@ -375,7 +375,6 @@ object ApiManager {
 
 
     fun callEmotionrecognitionImage(imageFile: File, tv:TextView) {
-
 
         val image = MultipartBody.Part.createFormData(
             "image[]",
